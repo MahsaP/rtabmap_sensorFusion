@@ -1,0 +1,15 @@
+<launch>
+
+  <arg name="localization"      default="false"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera_link_rgb"   args="0.0 0 0.0 0.0 0 0.0 base_link camera_link 20" />
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_link" args="0.0 0.0 -0.01 0 0 0 base_link imu 20" />
+
+  <include file="$(find pleurobot_new)/launch/sensor_fusion.launch">
+      <arg name="frame_id" value="base_link"/>
+      <arg name="localization" value="$(arg localization)"/>
+      <arg name="imu_remove_gravitational_acceleration" value="false"/>
+  </include>
+  
+</launch>
